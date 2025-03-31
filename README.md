@@ -26,7 +26,7 @@ Para levantar este proyecto necesitarás:
 ## Estructura del proyecto
 
 ```
-📦 Blaclist API
+📦 Blacklist API
 ├── 📁 MISW4304-Proyecto-Devops
 │   ├── 📁 entrega
 │   │   ├── 📁 db   # Clases para conexión a base de datos.
