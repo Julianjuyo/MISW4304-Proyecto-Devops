@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from entrega.routers.blacklist_routers import router as blacklist_router
-from entrega.db.database import engine, Base  # 👈 Quita el punto
+from src.routers.blacklist_routers import router as blacklist_router
+from src.db.database import engine, Base  # 👈 Quita el punto
 
 Base.metadata.create_all(bind=engine)
 

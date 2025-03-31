@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from entrega.models.blacklist_model import BlacklistEmail
+from src.models.blacklist_model import BlacklistEmail
 from ..schemas.blacklist_schemas import BlacklistEmailCreate, BlacklistEmailResponse
 from datetime import datetime
 import socket

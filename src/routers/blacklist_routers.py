@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Header, HTTPException, Request, Path
 from sqlalchemy.orm import Session
-from entrega.db.database import get_db
+from src.db.database import get_db
 from ..schemas.blacklist_schemas import BlacklistEmailCreate, BlacklistEmailResponse
 from ..services.blacklist_services import add_email_to_blacklist, get_blacklist_status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials

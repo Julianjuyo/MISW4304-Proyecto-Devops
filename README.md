@@ -1,11 +1,11 @@
-# ENTREGA BLACKLIST API
+# BlackList API
 
-📄 Esta carpeta contiene el código fuente para blacklist API. El proyecto fue realizado utilizando [Python](https://www.python.org/downloads/) versión 3.12
+Esta carpeta contiene el código fuente para blacklist API. El proyecto fue realizado utilizando [Python](https://www.python.org/downloads/) versión 3.12
 
 
 ## Contenidos
 
-- [Blacklist API](#blacklist-api)
+- Blacklist API
   - [Contenidos](#contenidos)
   - [Prerrequisitos](#prerrequisitos)
   - [Estructura del proyecto](#estructura-del-proyecto)
@@ -34,7 +34,7 @@ Para levantar este proyecto necesitarás:
 │   │   ├── 📁 routers  # Definición de rutas y endpoints.
 │   │   ├── 📁 schemas  # Definición de request y responses.
 │   │   ├── 📁 services     # Clases con lógica de negocio.
-│   │   ├── 📄 main.py  # Clase principal de la microservicio.
+│   │   ├── 📄 main.py  # Clase principal del microservicio.
 ├── 📄 .env   # Archivo con las variables de entorno.
 ├── 📄 Dockerfile   # Archivo para despliegue con docker.
 ├── 📄 README.md    # Usted está aquí.
@@ -47,17 +47,15 @@ Para levantar este proyecto necesitarás:
 
     <details>
     <summary>Linux/MacOS</summary>
-    <pre><code> cd MISW4304-Proyecto-Devops
-    python -m venv .venv
-    source .venv/bin/activate
+    <pre><code>  python -m venv .venv
+    . venv/bin/activate
     pip install -r requirements.txt</code></pre>
     </details>
 
     <details>
     <summary>Windows</summary>
-    <pre><code> cd posts
-    python -m venv .venv
-    .\.venv\Scripts\activate
+    <pre><code>  python -m venv .venv
+    .\venv\Scripts\activate
     pip install -r requirements.txt</code></pre>
     </details>
     
@@ -67,17 +65,17 @@ Para levantar este proyecto necesitarás:
    
     **Nota**:  Al crearla, rellene los campos que se encuentran en el archivo .env
 
-    DB_USER=usuario de la base de datos
-    DB_PASSWORD=contrasena de la base de datos
-    DB_HOST_DOCKER=dejar vacio
-    DB_PORT=puerto
+    DB_USER=usuario de la base de datos  
+    DB_PASSWORD=contrasena de la base de datos  
+    DB_HOST_DOCKER=dejar vacio  
+    DB_PORT=puerto  
     DB_NAME=nombre de la base de datos
 
 
 2.  Correr el comando siguiente:
 
     ```
-    uvicorn entrega.main:app --reload
+    uvicorn src.main:app --reload --port 8000
     ```
 
 2.  Probar endpoints:
@@ -92,11 +90,11 @@ Para levantar este proyecto necesitarás:
    
     **Nota**:  Al crearla, rellene los campos que se encuentran en el archivo .env
 
-    DB_USER=usuario de la base de datos
-    DB_PASSWORD=contrasena de la base de datos
-    DB_HOST_DOCKER=db-blacklist
-    DB_PORT=puerto
-    DB_NAME=nombre de la base de datos
+    DB_USER=usuario de la base de datos  
+    DB_PASSWORD=contrasena de la base de datos  
+    DB_HOST_DOCKER=db-blacklist  
+    DB_PORT=puerto  
+    DB_NAME=nombre de la base de datos  
 
 
 2.  Correr el comando siguiente:
@@ -110,8 +108,6 @@ Para levantar este proyecto necesitarás:
     ```
     http://localhost:8000/
     ```
-
-
 
 ## License
 
