@@ -69,8 +69,8 @@ Para levantar este proyecto necesitarás:
 
     DB_USER=usuario de la base de datos  
     DB_PASSWORD=contrasena de la base de datos  
-    DB_HOST_DOCKER=localhost
-    DB_PORT=puerto de la base de datos
+    DB_HOST_DOCKER=localhost  
+    DB_PORT=puerto de la base de datos  
     DB_NAME=nombre de la base de datos
 
 
@@ -95,7 +95,7 @@ Para levantar este proyecto necesitarás:
     DB_USER=usuario de la base de datos  
     DB_PASSWORD=contrasena de la base de datos  
     DB_HOST_DOCKER=db-blacklist  
-    DB_PORT=puerto  
+    DB_PORT=puerto de la base de datos  
     DB_NAME=nombre de la base de datos  
 
 
