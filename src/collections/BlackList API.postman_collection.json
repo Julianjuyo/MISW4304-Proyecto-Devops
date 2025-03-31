@@ -1,0 +1,617 @@
+{
+	"info": {
+		"_postman_id": "3cb668ec-c974-472f-a367-f091b46304f7",
+		"name": "BlackList API",
+		"description": "La **Blacklist API** es un microservicio desarrollado en Python (versión 3.12) que permite gestionar listas negras de correos electrónicos. Este proyecto está diseñado siguiendo principios de arquitectura limpia y buenas prácticas de desarrollo, utilizando herramientas modernas como FastAPI para la creación de endpoints y PostgreSQL como base de datos.\n\n### Características principales:\n\n- **Endpoints RESTful**: Proporciona una interfaz clara y estructurada para interactuar con las listas negras.\n    \n- **Modularidad**: La API está organizada en módulos como `db`, `models`, `routers`, `schemas` y `services`, lo que facilita su mantenimiento y escalabilidad.\n    \n- **Configuración flexible**: Utiliza un archivo [.env](https://null) para definir variables de entorno como credenciales de base de datos y configuraciones específicas.\n    \n- **Documentación interactiva**: Incluye documentación automática generada por FastAPI, accesible desde `/docs.`",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13706451"
+	},
+	"item": [
+		{
+			"name": "Agregar correo a la lista negra con éxito",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status should be 201\", () => {",
+							"    pm.expect(pm.response.code).to.eql(201);",
+							"});",
+							"",
+							"pm.test(\"Response has message\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(pm.response.json().message).to.not.be.undefined;",
+							"});",
+							"",
+							"const requestBody = pm.request.body.raw ? JSON.parse(pm.request.body.raw) : {};",
+							"pm.collectionVariables.set('EX_USER_EMAIL', requestBody.email);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "123456",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{$randomEmail}}\",\n    \"app_uuid\": \"{{$guid}}\",\n    \"blocked_reason\": \"blocked due to spam.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/blacklists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"blacklists"
+					]
+				},
+				"description": "Agrega un correo válido a la lista negra con token y body correctos."
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar correo a la lista negra con body incorrecto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status should be 422\", () => {",
+							"    pm.expect(pm.response.code).to.eql(422);",
+							"});",
+							"",
+							"pm.test(\"Response has detail\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(pm.response.json().detail).to.not.be.undefined;",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "123456",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{$randomEmail}}\",\n    \"blocked_reason\": \"blocked due to spam.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/blacklists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"blacklists"
+					]
+				},
+				"description": " Intenta agregar un correo con un body mal estructurado."
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar correo a la lista negra sin token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status should be 403\", () => {",
+							"    pm.expect(pm.response.code).to.eql(403);",
+							"});",
+							"",
+							"pm.test(\"Response has detail\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(pm.response.json().detail).to.not.be.undefined;",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{$randomEmail}}\",\n    \"app_uuid\": \"{{$guid}}\",\n    \"blocked_reason\": \"blocked due to spam.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/blacklists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"blacklists"
+					]
+				},
+				"description": "Intenta agregar un correo sin incluir un token de autenticación."
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar correo a la lista negra con token invalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status should be 401\", () => {",
+							"    pm.expect(pm.response.code).to.eql(401);",
+							"});",
+							"",
+							"pm.test(\"Response has detail\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(pm.response.json().detail).to.not.be.undefined;",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1234567",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{$randomEmail}}\",\n    \"app_uuid\": \"{{$guid}}\",\n    \"blocked_reason\": \"blocked due to spam.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/blacklists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"blacklists"
+					]
+				},
+				"description": "Intenta agregar un correo con un token no válido."
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar correo a la lista negra ya existente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status should be 400\", () => {",
+							"    pm.expect(pm.response.code).to.eql(400);",
+							"});",
+							"",
+							"pm.test(\"Response has detail\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(pm.response.json().detail).to.not.be.undefined;",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "123456",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{EX_USER_EMAIL}}\",\n    \"app_uuid\": \"{{$guid}}\",\n    \"blocked_reason\": \"blocked due to spam.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/blacklists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"blacklists"
+					]
+				},
+				"description": "Intenta agregar un correo que ya está en la lista negra."
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar correo en lista negra con éxito (found)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status should be 200\", () => {",
+							"    pm.expect(pm.response.code).to.eql(200);",
+							"});",
+							"",
+							"pm.test(\"Response has email\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(pm.response.json().email).to.not.be.undefined;",
+							"});",
+							"",
+							"pm.test(\"Response has blocked reason\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(pm.response.json().blocked_reason).to.not.be.undefined;",
+							"});",
+							"",
+							"pm.test(\"Response has created at\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(pm.response.json().created_at).to.not.be.undefined;",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "123456",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{$randomEmail}}\",\n    \"app_uuid\": \"{{$guid}}\",\n    \"blocked_reason\": \"blocked due to spam.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/blacklists/{{EX_USER_EMAIL}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"blacklists",
+						"{{EX_USER_EMAIL}}"
+					]
+				},
+				"description": "Consulta un correo existente en la lista negra."
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar correo en lista negra con éxito (notfound)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status should be 404\", () => {",
+							"    pm.expect(pm.response.code).to.eql(404);",
+							"});",
+							"",
+							"pm.test(\"Response has detail\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(pm.response.json().detail).to.not.be.undefined;",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "123456",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{$randomEmail}}\",\n    \"app_uuid\": \"{{$guid}}\",\n    \"blocked_reason\": \"blocked due to spam.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/blacklists/test@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"blacklists",
+						"test@gmail.com"
+					]
+				},
+				"description": "Consulta un correo que no está en la lista negra."
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar correo en lista negra sin token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status should be 403\", () => {",
+							"    pm.expect(pm.response.code).to.eql(403);",
+							"});",
+							"",
+							"pm.test(\"Response has detail\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(pm.response.json().detail).to.not.be.undefined;",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{$randomEmail}}\",\n    \"app_uuid\": \"{{$guid}}\",\n    \"blocked_reason\": \"blocked due to spam.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/blacklists/{{EX_USER_EMAIL}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"blacklists",
+						"{{EX_USER_EMAIL}}"
+					]
+				},
+				"description": "Intenta consultar un correo sin incluir un token."
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar correo en lista negra con token invalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status should be 401\", () => {",
+							"    pm.expect(pm.response.code).to.eql(401);",
+							"});",
+							"",
+							"pm.test(\"Response has detail\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(pm.response.json().detail).to.not.be.undefined;",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1234567",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{$randomEmail}}\",\n    \"app_uuid\": \"{{$guid}}\",\n    \"blocked_reason\": \"blocked due to spam.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/blacklists/{{EX_USER_EMAIL}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"blacklists",
+						"{{EX_USER_EMAIL}}"
+					]
+				},
+				"description": "Consulta un correo con un token no válido."
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar correo en lista negra con correo invalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status should be 422\", () => {",
+							"    pm.expect(pm.response.code).to.eql(422);",
+							"});",
+							"",
+							"pm.test(\"Response has detail\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(pm.response.json().detail).to.not.be.undefined;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "123456",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{$randomEmail}}\",\n    \"app_uuid\": \"{{$guid}}\",\n    \"blocked_reason\": \"blocked due to spam.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/blacklists/notanemail",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"blacklists",
+						"notanemail"
+					]
+				},
+				"description": "Consulta un correo con un parámetro mal formado."
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "EX_USER_EMAIL",
+			"value": ""
+		}
+	]
+}

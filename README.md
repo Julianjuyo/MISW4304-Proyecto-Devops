@@ -12,6 +12,7 @@ Esta carpeta contiene el código fuente para blacklist API. El proyecto fue real
   - [Instalación](#instalación)
   - [Ejecución local](#ejecución-local) 
   - [Ejecución Docker](#ejecución-docker)
+  - [Documentación](#documentación)
   - [License](#license)
 
 ## Prerrequisitos
@@ -29,6 +30,7 @@ Para levantar este proyecto necesitarás:
 📦 Blacklist API
 ├── 📁 MISW4304-Proyecto-Devops
 │   ├── 📁 entrega
+│   │   ├── 📁 collections   # Contiene las colecciones de Postman.
 │   │   ├── 📁 db   # Clases para conexión a base de datos.
 │   │   ├── 📁 models   # Modelos para base de datos.
 │   │   ├── 📁 routers  # Definición de rutas y endpoints.
@@ -67,8 +69,8 @@ Para levantar este proyecto necesitarás:
 
     DB_USER=usuario de la base de datos  
     DB_PASSWORD=contrasena de la base de datos  
-    DB_HOST_DOCKER=dejar vacio  
-    DB_PORT=puerto  
+    DB_HOST_DOCKER=localhost
+    DB_PORT=puerto de la base de datos
     DB_NAME=nombre de la base de datos
 
 
@@ -108,6 +110,10 @@ Para levantar este proyecto necesitarás:
     ```
     http://localhost:8000/
     ```
+
+## Documentación
+
+La documentación del API se encuentra disponible en el siguiente [enlace](https://documenter.getpostman.com/view/13706451/2sB2cRC3xX).
 
 ## License
 

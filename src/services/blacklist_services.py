@@ -20,7 +20,7 @@ def add_email_to_blacklist(db: Session, email_data: BlacklistEmailCreate, ip_add
     db.add(new_blacklist_entry)
     db.commit()
     db.refresh(new_blacklist_entry)
-    return {"message": "Email successfully added to blacklist"}, 201
+    return {"message": "Email successfully added to blacklist"}
 
 
 def get_blacklist_status(db: Session, email: str):
