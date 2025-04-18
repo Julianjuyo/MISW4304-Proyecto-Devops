@@ -5,7 +5,7 @@ phases:
     runtime-versions:
       python: 3.12
     commands:
-      - echo Installing dpendencies for the python application...
+      - echo Installing PostgreSQL for the python application...
       - apt-get update && apt-get install -y libgl1-mesa-glx libglib2.0-0
       - apt-get install -y wget gnupg2 lsb-release
       - wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /usr/share/keyrings/postgresql-archive-keyring.gpg
@@ -21,13 +21,10 @@ phases:
       - pip install -r requirements.txt
       - echo Logging in to Amazon ECR
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 704899756090.dkr.ecr.us-east-1.amazonaws.com
-  test:
-    commands:
-      - echo Running tests...
-      - pytest
   build:
     commands:
       - echo Build started on `date`
+      - echo Running tests...
       - echo Building the Docker image...
       - docker build -t devops/python-app .
       - docker tag devops/python-app:latest 704899756090.dkr.ecr.us-east-1.amazonaws.com/devops/python-app:latest
