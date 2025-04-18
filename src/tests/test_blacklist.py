@@ -1,8 +1,7 @@
+from src.tests.conftest import client
 import pytest
-from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from src.main import app
 from src.models.blacklist_model import BlacklistEmail
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
@@ -19,9 +18,6 @@ def override_get_db():
     finally:
         db.close()
 
-
-
-client = TestClient(app)
 STATIC_BEARER_TOKEN = "123456"
 
 

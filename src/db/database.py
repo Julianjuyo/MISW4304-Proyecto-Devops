@@ -6,14 +6,18 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-POSTGRES_USER = os.environ["DB_USER"]
-POSTGRES_PASSWORD = os.environ["DB_PASSWORD"]
-POSTGRES_HOST = os.environ.get("DB_HOST_DOCKER", "localhost")
-POSTGRES_PORT = os.environ["DB_PORT"]
-POSTGRES_DB = os.environ["DB_NAME"]
+if os.getenv("TESTING"):
+    SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
+else:
+    POSTGRES_USER = os.environ["DB_USER"]
+    POSTGRES_PASSWORD = os.environ["DB_PASSWORD"]
+    POSTGRES_HOST = os.environ.get("DB_HOST_DOCKER", "localhost")
+    POSTGRES_PORT = os.environ["DB_PORT"]
+    POSTGRES_DB = os.environ["DB_NAME"]
+    SQLALCHEMY_DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
 
 def get_standard_postgres_connection():
-    return f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
+    return SQLALCHEMY_DATABASE_URL
 
 def get_database_engine():
     db_url = get_standard_postgres_connection()
