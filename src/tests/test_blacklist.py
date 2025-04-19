@@ -44,8 +44,8 @@ def test_add_email_success():
         },
         headers={"Authorization": f"Bearer {STATIC_BEARER_TOKEN}"}
     )
-    assert response.status_code == 201
-    assert response.json()["message"] == "Email successfully added to blacklist"
+    assert response.status_code == 203
+    assert response.json()["message"] == "Email successfully added to"
 
 
 def test_add_email_duplicate():
