@@ -9,20 +9,20 @@ phases:
       - echo Installing dependencies for the python application
       - pip install -r requirements.txt
       - echo Logging in to Amazon ECR
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 704899756090.dkr.ecr.us-east-1.amazonaws.com
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 163622408598.dkr.ecr.us-east-1.amazonaws.com
   build:
     commands:
       - echo Build started on `date`
       - echo Running tests...
       - pytest
       - echo Building the Docker image...
-      - docker build -t devops/python-app .
-      - docker tag devops/python-app:latest 704899756090.dkr.ecr.us-east-1.amazonaws.com/devops/python-app:latest
+      - docker build -t devops_e2 .
+      - docker tag devops_e2:latest 163622408598.dkr.ecr.us-east-1.amazonaws.com/devops_e2:latest
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image to ECR...
-      - docker push 704899756090.dkr.ecr.us-east-1.amazonaws.com/devops/python-app:latest
+      - docker push 163622408598.dkr.ecr.us-east-1.amazonaws.com/devops_e2:latest
 artifacts:
   files:
     - '**/*'
