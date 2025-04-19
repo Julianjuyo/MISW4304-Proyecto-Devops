@@ -4,19 +4,8 @@ phases:
   install:
     runtime-versions:
       python: 3.12
-    commands:
-      - echo Installing PostgreSQL for the python application...
-      - apt-get update && apt-get install -y libgl1-mesa-glx libglib2.0-0
-      - apt-get install -y wget gnupg2 lsb-release
-      - wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /usr/share/keyrings/postgresql-archive-keyring.gpg
-      - echo "deb [signed-by=/usr/share/keyrings/postgresql-archive-keyring.gpg] http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
-      - apt-get update
-      - apt-get install -y postgresql-12 postgresql-client-12
   pre_build:
     commands:
-      - echo Starting PostgreSQL service... 
-      - service postgresql start
-      - su - postgres -c "psql -c \"ALTER USER postgres PASSWORD 'password';\""
       - echo Installing dependencies for the python application
       - pip install -r requirements.txt
       - echo Logging in to Amazon ECR
@@ -25,6 +14,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Running tests...
+      - pytest
       - echo Building the Docker image...
       - docker build -t devops/python-app .
       - docker tag devops/python-app:latest 704899756090.dkr.ecr.us-east-1.amazonaws.com/devops/python-app:latest
