@@ -12,7 +12,7 @@ else:
     POSTGRES_USER = os.environ["DB_USER"]
     POSTGRES_PASSWORD = os.environ["DB_PASSWORD"]
     POSTGRES_HOST = os.environ.get("DB_HOST_DOCKER", "localhost")
-    POSTGRES_PORT = os.environ["DB_PORT"]
+    POSTGRES_PORT = int(os.environ["DB_PORT"])
     POSTGRES_DB = os.environ["DB_NAME"]
     SQLALCHEMY_DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
 
