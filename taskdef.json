@@ -1,26 +1,32 @@
 {
     "executionRoleArn": "arn:aws:iam::163622408598:role/ecsTaskExecutionRole",
     "containerDefinitions": [
-      {
-        "portMappings": [
-          {
-            "hostPort": 5000,
-            "protocol": "tcp",
-            "containerPort": 5000
-          }
-        ],
-
-        "image": "<IMAGE1_NAME>",
-        "essential": true,
-        "name": "container-app-python"
-      }
+        {
+            "portMappings": [
+                {
+                    "hostPort": 5000,
+                    "protocol": "tcp",
+                    "containerPort": 5000
+                }
+            ],
+            "image": "<IMAGE1_NAME>",
+            "essential": true,
+            "name": "container-app-python",
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/family-entrega3-devops",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        }
     ],
-
     "requiresCompatibilities": [
-      "FARGATE"
+        "FARGATE"
     ],
     "networkMode": "awsvpc",
     "cpu": "512",
     "memory": "1024",
     "family": "family-entrega3-devops"
-  }
+}
