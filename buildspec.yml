@@ -16,13 +16,27 @@ phases:
       - echo Running tests...
       - pytest
       - echo Building the Docker image...
-      - docker build -t devops_e2 .
-      - docker tag devops_e2:latest 163622408598.dkr.ecr.us-east-1.amazonaws.com/devops_e2:latest
+      - docker build -t entrega3 .
+      - docker tag entrega3:latest 163622408598.dkr.ecr.us-east-1.amazonaws.com/entrega3:latest
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image to ECR...
-      - docker push 163622408598.dkr.ecr.us-east-1.amazonaws.com/devops_e2:latest
+      - docker push 163622408598.dkr.ecr.us-east-1.amazonaws.com/entrega3:latest
+      - echo Writing Image Definitions file...
+      - printf '[{"name":"Container-app-python","imageUri":"163622408598.dkr.ecr.us-east-1.amazonaws.com/entrega3:latest"}]' > imagedefinitions.json
+      - printf '{"ImageURI":"163622408598.dkr.ecr.us-east-1.amazonaws.com/entrega3:latest"}' > imageDetail.json
+      - cat imagedefinitions.json 
 artifacts:
   files:
     - '**/*'
+    - imagedefinitions.json
+    - imageDetail.json
+  secondary-artifacts:
+    DefinitionArtifact:
+      files:
+        - appspec.yaml
+        - taskdef.json
+    ImageArtifact:
+      files:
+        - imageDetail.json
