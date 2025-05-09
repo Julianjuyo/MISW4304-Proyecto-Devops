@@ -16,7 +16,7 @@ phases:
       - echo Running tests...
       - pytest
       - echo Building the Docker image...
-      - docker build -t entrega3 .
+      - docker build --platform linux/amd64 -t entrega3 .
       - docker tag entrega3:latest 163622408598.dkr.ecr.us-east-1.amazonaws.com/entrega3:latest
   post_build:
     commands:
