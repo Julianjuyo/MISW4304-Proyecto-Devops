@@ -15,7 +15,7 @@
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
-                    "awslogs-group": "/ecs/family-entrega3-devops",
+                    "awslogs-group": "/ecs/family-entrega4-devops",
                     "awslogs-region": "us-east-1",
                     "awslogs-stream-prefix": "ecs"
                 }
@@ -23,23 +23,23 @@
             "secrets": [
                 {
                     "name": "DB_USER",
-                    "valueFrom": "arn:aws:secretsmanager:us-east-1:163622408598:secret:entrega3-secrets-MeDBlf:DB_USER::"
+                    "valueFrom": "arn:aws:secretsmanager:us-east-1:163622408598:secret:entrega4-secrets-MeDBlf:DB_USER::"
                 },
                 {
                     "name": "DB_PASSWORD",
-                    "valueFrom": "arn:aws:secretsmanager:us-east-1:163622408598:secret:entrega3-secrets-MeDBlf:DB_PASSWORD::"
+                    "valueFrom": "arn:aws:secretsmanager:us-east-1:163622408598:secret:entrega4-secrets-MeDBlf:DB_PASSWORD::"
                 },                
                 {
                     "name": "DB_HOST_DOCKER",
-                    "valueFrom": "arn:aws:secretsmanager:us-east-1:163622408598:secret:entrega3-secrets-MeDBlf:DB_HOST_DOCKER::"
+                    "valueFrom": "arn:aws:secretsmanager:us-east-1:163622408598:secret:entrega4-secrets-MeDBlf:DB_HOST_DOCKER::"
                 },                
                 {
                     "name": "DB_PORT",
-                    "valueFrom": "arn:aws:secretsmanager:us-east-1:163622408598:secret:entrega3-secrets-MeDBlf:DB_PORT::"
+                    "valueFrom": "arn:aws:secretsmanager:us-east-1:163622408598:secret:entrega4-secrets-MeDBlf:DB_PORT::"
                 },                
                 {
                     "name": "DB_NAME",
-                    "valueFrom": "arn:aws:secretsmanager:us-east-1:163622408598:secret:entrega3-secrets-MeDBlf:DB_NAME::"
+                    "valueFrom": "arn:aws:secretsmanager:us-east-1:163622408598:secret:entrega4-secrets-MeDBlf:DB_NAME::"
                 }
             ]
         }
@@ -50,5 +50,5 @@
     "networkMode": "awsvpc",
     "cpu": "512",
     "memory": "1024",
-    "family": "family-entrega3-devops"
+    "family": "family-entrega4-devops"
 }
