@@ -17,15 +17,15 @@ phases:
       - pytest
       - echo Building the Docker image...
       - docker build --platform linux/amd64 -t entrega4 .
-      - docker tag entrega4:latest 163622408598.dkr.ecr.us-east-1.amazonaws.com/entrega4:latest
+      - docker tag entrega4:latest 163622408598.dkr.ecr.us-east-1.amazonaws.com/blacklist:latest
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image to ECR...
-      - docker push 163622408598.dkr.ecr.us-east-1.amazonaws.com/entrega4:latest
+      - docker push 163622408598.dkr.ecr.us-east-1.amazonaws.com/blacklist:latest
       - echo Writing Image Definitions file...
-      - printf '[{"name":"Container-app-python","imageUri":"163622408598.dkr.ecr.us-east-1.amazonaws.com/entrega4:latest"}]' > imagedefinitions.json
-      - printf '{"ImageURI":"163622408598.dkr.ecr.us-east-1.amazonaws.com/entrega4:latest"}' > imageDetail.json
+      - printf '[{"name":"Container-app-python","imageUri":"163622408598.dkr.ecr.us-east-1.amazonaws.com/blacklist:latest"}]' > imagedefinitions.json
+      - printf '{"ImageURI":"163622408598.dkr.ecr.us-east-1.amazonaws.com/blacklist:latest"}' > imageDetail.json
       - cat imagedefinitions.json 
 artifacts:
   files:
