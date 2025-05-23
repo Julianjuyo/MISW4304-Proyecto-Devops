@@ -65,7 +65,7 @@ def test_add_email_duplicate():
         },
         headers={"Authorization": f"Bearer {STATIC_BEARER_TOKEN}"}
     )
-    assert response.status_code == 403
+    assert response.status_code == 400
     assert response.json()["detail"] == "Email is already in blacklist"
 
 
