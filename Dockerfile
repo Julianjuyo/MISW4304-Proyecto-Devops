@@ -16,7 +16,7 @@ CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "5000"]
 
 # New Relic
 RUN pip install newrelic
-ENV NEW_RELIC_APP_NAME="app_entrega4_final"
+ENV NEW_RELIC_APP_NAME="app_entrega4"
 ENV NEW_RELIC_LOG=stdout
 ENV NEW_RELIC_DISTRIBUTED_TRACING_ENABLED=true
 ENV NEW_RELIC_LOG_LEVEL=info
